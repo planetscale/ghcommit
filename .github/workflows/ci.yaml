@@ -7,8 +7,7 @@ on:
 
 permissions:
   contents: write
-  # packages: write
-  # issues: write
+  packages: write
 
 jobs:
   test:
@@ -63,11 +62,3 @@ jobs:
         run: make release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # - uses: goreleaser/goreleaser-action@v4
-      #   with:
-      #     distribution: goreleaser
-      #     version: 1.16.2
-      #     args: release --clean
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
