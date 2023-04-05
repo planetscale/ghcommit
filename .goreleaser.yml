@@ -1,0 +1,89 @@
+project_name: ghcommit
+
+builds:
+  - binary: ghcommit
+    main: ./
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      # Default is `-s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}`.
+      -s -w -X main.version={{.Version}}+{{.ShortCommit}}
+    goos:
+      - linux
+      - darwin
+      - freebsd
+      - openbsd
+    goarch:
+      - amd64
+      - arm64
+    goarm:
+      - ""
+    ignore:
+      - goos: darwin
+        goarch: 386
+      - goos: windows
+        goarch: 386
+
+archives:
+  # binary-only releases - all platforms
+  - id: binaries
+    format: binary
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+  # archive releases containing: binary, readme, and license. tarballs (macos, linux), zip (windows)
+  - id: archives
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}amd64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+    format_overrides:
+      - goos: windows
+        format: zip
+
+checksum:
+  name_template: "checksums.txt"
+
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^ci:"
+      - "^test:"
+      - "skip ci"
+      - "ci skip"
+      - Merge pull request
+      - Merge branch
+
+dockers:
+  # primary docker image for amd64 arch
+  - dockerfile: Dockerfile
+    ids:
+      - ghcommit
+    goos: linux
+    goarch: amd64
+    image_templates:
+      - "ghcr.io/planetscale/ghcommit:{{ .Tag }}"
+      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}"
+      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}"
+      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
+      - "ghcr.io/planetscale/ghcommit:latest"
+  # build a docker image for arm64 arch
+  - dockerfile: Dockerfile
+    ids:
+      - ghcommit
+    goos: linux
+    goarch: arm64
+    goarm: ""
+    image_templates:
+      - "ghcr.io/planetscale/ghcommit:{{ .Tag }}-arm64"
+      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}-arm64"
+      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}-arm64"
+      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}.{{ .Patch }}-arm64"
+      - "ghcr.io/planetscale/ghcommit:latest-arm64"

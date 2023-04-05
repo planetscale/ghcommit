@@ -1,0 +1,39 @@
+name: goreleaser
+
+on:
+  push:
+    branches:
+      - main
+      - goreleaser-wf # TODO temporary, remove when done
+
+permissions:
+  contents: write
+  # packages: write
+  # issues: write
+
+jobs:
+  goreleaser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - run: git fetch --force --tags
+
+      - uses: actions/setup-go@v4
+        with:
+          go-version: 1.20
+
+      - name: run autotag to increment version
+        run: |
+          curl -sL https://git.io/autotag-install | sudo sh -s -- -b /usr/local/bin
+          autotag -v
+
+      - uses: goreleaser/goreleaser-action@v4
+        with:
+          distribution: goreleaser
+          version: 1.16.2
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
