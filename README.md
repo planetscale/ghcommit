@@ -23,6 +23,8 @@ especially when maintainers leave a project. Using the API eliminates the need f
 
 ## Usage
 
+A `GITHUB_TOKEN` environment variable must be set.
+
 The `-r/--repository`, `-b/--branch`, and `-m/--message` flags are required.
 
 At least one added/changed or deleted file must be specified. Provide a list of changed/added (`-a/--add`) or deleted (`-d/--delete`) files.
