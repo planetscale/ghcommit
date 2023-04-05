@@ -31,3 +31,19 @@ As mentioned above, it is possible to sign commits with GPG.
 Another option which uses a form of keyless signing is the [sigstore/gitsign](https://github.com/sigstore/gitsign)
 project.  However, as of April 2023, GitHub does not recognize signatures created by `gitsign` so
 these commits will not be identified as "verified" by GitHub.
+
+## Releasing
+
+Releases are generated automatically on all successful `main` branch builds. This project uses
+[autotag](https://github.com/pantheon-systems/autotag) and [goreleaser](https://goreleaser.com/) to
+automate this process.
+
+Semver (`vMajor.Minor.Patch`) is used for versioning and releases. By default, `autotag` will bump the
+patch version on a successful main build, eg: `v1.0.0` -> `v1.0.1`.
+
+To bump the major or minor release instead, include `[major]` or `[minor]` in the commit message.
+Refer to the autotag [docs](https://github.com/pantheon-systems/autotag#incrementing-major-and-minor-versions)
+for more details.
+
+Include `[skip ci]` in the commit message to prevent a new version from being released. Only use this
+for things like documentation updates.
