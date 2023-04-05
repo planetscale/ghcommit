@@ -16,6 +16,10 @@ branch protection.
 It is possible to sign commits with GPG, however managing GPG keys can be cumbersome,
 especially when maintainers leave a project. Using the API eliminates the need for key management.
 
+:warning: This is meant for use in CI environments and with small commits. For example, a CI workflow
+that formats code and commits the changes. This is not meant to be used for large commits
+and should not be used in place of `git` for day-to-day development.
+
 ## Install
 
 1. go install: `go install github.com/pantheon-systems/ghcommit@latest`
