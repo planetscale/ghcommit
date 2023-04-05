@@ -46,14 +46,6 @@ func main() {
 	httpClient := oauth2.NewClient(ctx, tok)
 	client := githubv4.NewClient(httpClient)
 
-	var m struct {
-		CreateCommitOnBranch struct {
-			Commit struct {
-				URL string
-			}
-		} `graphql:"createCommitOnBranch(input:$input)"`
-	}
-
 	// parse the commit message into headline and body
 	headline, body := parseMessage(opts.Message)
 
@@ -65,19 +57,6 @@ func main() {
 			log.Fatal(err)
 		}
 		expectedHeadOid = headSHA
-	}
-
-	// create the $input struct for the graphQL createCommitOnBranch mutation:
-	input := githubv4.CreateCommitOnBranchInput{
-		Branch: githubv4.CommittableBranch{
-			RepositoryNameWithOwner: githubv4.NewString(githubv4.String(opts.Repository)),
-			BranchName:              githubv4.NewString(githubv4.String(opts.Branch)),
-		},
-		Message: githubv4.CommitMessage{
-			Headline: githubv4.String(headline),
-			Body:     githubv4.NewString(githubv4.String(body)),
-		},
-		ExpectedHeadOid: githubv4.GitObjectID(expectedHeadOid),
 	}
 
 	// process added / modified files:
@@ -101,9 +80,30 @@ func main() {
 		})
 	}
 
-	input.FileChanges = &githubv4.FileChanges{
-		Additions: &additions,
-		Deletions: &deletions,
+	// the actual mutation request
+	var m struct {
+		CreateCommitOnBranch struct {
+			Commit struct {
+				URL string
+			}
+		} `graphql:"createCommitOnBranch(input:$input)"`
+	}
+
+	// create the $input struct for the graphQL createCommitOnBranch mutation request:
+	input := githubv4.CreateCommitOnBranchInput{
+		Branch: githubv4.CommittableBranch{
+			RepositoryNameWithOwner: githubv4.NewString(githubv4.String(opts.Repository)),
+			BranchName:              githubv4.NewString(githubv4.String(opts.Branch)),
+		},
+		Message: githubv4.CommitMessage{
+			Headline: githubv4.String(headline),
+			Body:     githubv4.NewString(githubv4.String(body)),
+		},
+		FileChanges: &githubv4.FileChanges{
+			Additions: &additions,
+			Deletions: &deletions,
+		},
+		ExpectedHeadOid: githubv4.GitObjectID(expectedHeadOid),
 	}
 
 	if err := client.Mutate(ctx, &m, input, nil); err != nil {
