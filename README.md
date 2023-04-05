@@ -28,6 +28,6 @@ TODO
 
 As mentioned above, it is possible to sign commits with GPG.
 
-Another option which uses a form of keyless signing is the [gitsign](https://github.com/sigstore/gitsign) project.
-However, as of April 2023, GitHub does not recognize the signatures created by gitsign and so
-these commits will not be identified as "verified" by GitHub.Q
+Another option which uses a form of keyless signing is the [sigstore/gitsign](https://github.com/sigstore/gitsign)
+project.  However, as of April 2023, GitHub does not recognize signatures created by `gitsign` so
+these commits will not be identified as "verified" by GitHub.
