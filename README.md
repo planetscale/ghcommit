@@ -36,6 +36,9 @@ ghcommit -r owner/repo -b branch --add newfile.txt --add changedfile.txt --delet
 
 All flags may be provided via environment variables. Run `ghcommit -h` to see the full list of flags and env vars.
 
+> NOTE: Changes are not reflected on the local clone of the repository. The commit is made directly to the GitHub repository.
+> This utility is meant to be run from CI pipelines where the local clone is ephemeral.
+
 ## Alternatives
 
 As mentioned above, it is possible to sign commits with GPG.
