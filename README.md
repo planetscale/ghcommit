@@ -27,8 +27,9 @@ A `GITHUB_TOKEN` environment variable must be set.
 
 The `-r/--repository`, `-b/--branch`, and `-m/--message` flags are required.
 
-At least one added/changed or deleted file must be specified. Provide a list of changed/added (`-a/--add`) or deleted (`-d/--delete`) files.
-The `-a` and `-d` flags may be used multiple times.
+At least one added/changed or deleted file must be specified.
+
+Provide a list of changed/added (`-a/--add`) or deleted (`-d/--delete`) files.  The `-a` and `-d` flags may be used multiple times.
 
 ```console
 ghcommit -r owner/repo -b branch --add newfile.txt --add changedfile.txt --delete deletedfile.txt
