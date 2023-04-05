@@ -1,23 +1,20 @@
 # ghcommit
 
-Commit a file to a GitHub repository using the GraphQL API's `createCommitOnBranch` mutation.
+Use GraphQL API's `createCommitOnBranch` mutation to commit files to a GitHub repository.
 
 ## Why?
 
-Keyless signing.
+Enable keyless signing.
 
-Committing changes from inside a CI environment such as GitHub Actions
-using the `git` cli will not create signed commits. However, commits made through
-the API are signed by GitHub's own GPG key.
+Commits made within a CI environment like GitHub Actions using the `git` cli line will not
+be signed. By using the API, commits are signed with GitHub's GPG key.
 
-This provides a simple way to commit changes to a repository from inside a CI
-environment and have the commit signed by GitHub. This is critical for repositories
-that have enabled the `enforce signed commits` branch protection option.
+This method allows for signed commits in a CI environment without needing to manage private
+GPG keys. This is important for repositories that require signed commits as part of their
+branch protection.
 
-You could simply sign with GPG keys by putting a private GPG key into the CI environment.
-However, then you need a way to manage these keys and rotate them as maintainers
-leave the project, because they could have a copy of the GPG key. By committing via the API
-you avoid the overhead of managing GPG keys.
+It is possible to sign commits with GPG, however managing GPG keys can be cumbersome,
+especially when maintainers leave a project. Using the API eliminates the need for key management.
 
 ## Install
 
@@ -26,3 +23,11 @@ TODO
 ## Usage
 
 TODO
+
+## Alternatives
+
+As mentioned above, it is possible to sign commits with GPG.
+
+Another option which uses a form of keyless signing is the [gitsign](https://github.com/sigstore/gitsign) project.
+However, as of April 2023, GitHub does not recognize the signatures created by gitsign and so
+these commits will not be identified as "verified" by GitHub.Q
