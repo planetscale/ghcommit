@@ -68,18 +68,18 @@ release:
   footer: |
     ## Docker Images
     amd64:
-    - "ghcr.io/planetscale/ghcommit:{{ .Tag }}"
-    - "ghcr.io/planetscale/ghcommit:v{{ .Major }}"
-    - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}"
-    - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
-    - "ghcr.io/planetscale/ghcommit:latest"
+    - `ghcr.io/planetscale/ghcommit:{{ .Tag }}`
+    - `ghcr.io/planetscale/ghcommit:v{{ .Major }}`
+    - `ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}`
+    - `ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}.{{ .Patch }}`
+    - `ghcr.io/planetscale/ghcommit:latest`
 
     arm64:
-    - "ghcr.io/planetscale/ghcommit:{{ .Tag }}-arm64"
-    - "ghcr.io/planetscale/ghcommit:v{{ .Major }}-arm64"
-    - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}-arm64"
-    - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}.{{ .Patch }}-arm64"
-    - "ghcr.io/planetscale/ghcommit:latest-arm64"
+    - `ghcr.io/planetscale/ghcommit:{{ .Tag }}-arm64`
+    - `ghcr.io/planetscale/ghcommit:v{{ .Major }}-arm64`
+    - `ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}-arm64`
+    - `ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}.{{ .Patch }}-arm64`
+    - `ghcr.io/planetscale/ghcommit:latest-arm64`
 
 dockers:
   # primary docker image for amd64 arch
