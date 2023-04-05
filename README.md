@@ -18,11 +18,21 @@ especially when maintainers leave a project. Using the API eliminates the need f
 
 ## Install
 
-TODO
+1. go install: `go install github.com/pantheon-systems/ghcommit@latest`
+2. Binaries, tarballs, and docker images are available on the [github releases](https://github.com/planetscale/ghcommit/releases) page.
 
 ## Usage
 
-TODO
+The `-r/--repository`, `-b/--branch`, and `-m/--message` flags are required.
+
+At least one added/changed or deleted file must be specified. Provide a list of changed/added (`-a/--add`) or deleted (`-d/--delete`) files.
+The `-a` and `-d` flags may be used multiple times.
+
+```console
+ghcommit -r owner/repo -b branch --add newfile.txt --add changedfile.txt --delete deletedfile.txt
+```
+
+All flags may be provided via environment variables. Run `ghcommit -h` to see the full list of flags and env vars.
 
 ## Alternatives
 
