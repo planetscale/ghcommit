@@ -1,0 +1,73 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - "*"
+
+permissions:
+  contents: write
+  # packages: write
+  # issues: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && !contains(toJson(github.event.commits), '[ci skip]') && !contains(toJson(github.event.commits), '[skip ci]')
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "1.20"
+
+      - uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.52.2
+
+      # installed here to run lint on the .goreleaser.yml file:
+      - name: Install GoReleaser
+        uses: goreleaser/goreleaser-action@v4
+        with:
+          install-only: true
+
+      - run: make lint
+      - run: make test
+
+  release:
+    needs: [test]
+    runs-on: ubuntu-latest
+    # only create a release on main builds:
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - run: git fetch --force --tags
+
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "1.20"
+
+      - name: install autotag binary
+        run: |
+          curl -sL https://git.io/autotag-install | sudo sh -s -- -b /usr/local/bin
+
+      - name: Install GoReleaser
+        uses: goreleaser/goreleaser-action@v4
+        with:
+          install-only: true
+
+      - name: do release
+        run: make release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # - uses: goreleaser/goreleaser-action@v4
+      #   with:
+      #     distribution: goreleaser
+      #     version: 1.16.2
+      #     args: release --clean
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
