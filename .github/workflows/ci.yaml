@@ -6,6 +6,7 @@ on:
       - "*"
 
 permissions:
+  # these perms needed for goreleaser to publish releases and docker images (https://goreleaser.com/ci/actions/#token-permissions):
   contents: write
   packages: write
 
@@ -39,11 +40,13 @@ jobs:
     # only create a release on main builds:
     if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v3
+      - name: checkout code with full history (unshallow)
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - run: git fetch --force --tags
+      - name: fetch tags
+        run: git fetch --force --tags
 
       - uses: actions/setup-go@v4
         with:
@@ -57,6 +60,13 @@ jobs:
         uses: goreleaser/goreleaser-action@v4
         with:
           install-only: true
+
+      - name: login to ghcr.io
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: do release
         run: make release
