@@ -15,6 +15,8 @@ import (
 	"golang.org/x/oauth2"
 )
 
+var version = "development"
+
 var opts struct {
 	Adds       []string `short:"a" long:"add" description:"Added or modified file to commit. Use multiple times for multiple files." env:"GHCOMMIT_ADD"`
 	Deletes    []string `short:"d" long:"delete" description:"Deleted file to commit. Use multiple times for multiple files." env:"GHCOMMIT_DELETE"`
@@ -22,6 +24,7 @@ var opts struct {
 	Repository string   `short:"r" long:"repository" description:"Owner/Repository to commit to." env:"GHCOMMIT_REPOSITORY" required:"true"`
 	Branch     string   `short:"b" long:"branch" description:"Branch to commit to." env:"GHCOMMIT_BRANCH" required:"true"`
 	HeadSHA    string   `short:"s" long:"sha" description:"Commit SHA of the HEAD branch to apply to. Acts as a safety check to ensure the right branch is modified. The output of 'git rev-parse {branch}' is used if not set" env:"GHCOMMIT_SHA"`
+	Version    bool     `short:"v" long:"version" description:"Print version and exit"`
 }
 
 func main() {
@@ -31,6 +34,11 @@ func main() {
 	if err != nil {
 		// no need to print error, flags.Parse() already does this
 		os.Exit(1)
+	}
+
+	if opts.Version {
+		log.Println(version)
+		os.Exit(0)
 	}
 
 	if len(opts.Adds) == 0 && len(opts.Deletes) == 0 {

@@ -2,3 +2,5 @@ Attic/
 .vscode/
 ghcommit
 HACK.md
+dist/
+cover.out
