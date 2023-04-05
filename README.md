@@ -1,6 +1,6 @@
 # ghcommit
 
-Use GitHub's GraphQL API's `createCommitOnBranch` mutation to commit files to a GitHub repository.
+Use GitHub's GraphQL API `createCommitOnBranch` mutation to commit files to a GitHub repository.
 
 ## Why?
 
