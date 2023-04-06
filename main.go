@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/base64"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -23,7 +24,7 @@ var opts struct {
 	Message    string   `short:"m" long:"message" description:"Commit message" env:"GHCOMMIT_MESSAGE" required:"true"`
 	Repository string   `short:"r" long:"repository" description:"Owner/Repository to commit to." env:"GHCOMMIT_REPOSITORY" required:"true"`
 	Branch     string   `short:"b" long:"branch" description:"Branch to commit to." env:"GHCOMMIT_BRANCH" required:"true"`
-	HeadSHA    string   `short:"s" long:"sha" description:"Commit SHA of the HEAD branch to apply to. Acts as a safety check to ensure the right branch is modified. The output of 'git rev-parse {branch}' is used if not set" env:"GHCOMMIT_SHA"`
+	HeadSHA    string   `short:"s" long:"sha" description:"Commit SHA of the HEAD branch to apply to. Acts as a safety check to ensure the right branch is modified. The output of 'git rev-parse HEAD' is used if not set" env:"GHCOMMIT_SHA"`
 	Version    bool     `short:"v" long:"version" description:"Print version and exit"`
 }
 
@@ -60,7 +61,7 @@ func main() {
 	// if no head SHA is provided, try to get it by running git in the current directory
 	expectedHeadOid := opts.HeadSHA
 	if expectedHeadOid == "" {
-		headSHA, err := getHeadSHA(ctx, opts.Branch)
+		headSHA, err := getHeadSHA(ctx)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -147,10 +148,10 @@ func parseMessage(msg string) (string, string) {
 	return parts[0], parts[1]
 }
 
-func getHeadSHA(ctx context.Context, ref string) (string, error) {
-	out, err := exec.CommandContext(ctx, "git", "rev-parse", ref).Output()
+func getHeadSHA(ctx context.Context) (string, error) {
+	out, err := exec.CommandContext(ctx, "git", "rev-parse", "HEAD").Output()
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("error running 'git rev-parse HEAD': %s", err)
 	}
 	s := string(out)
 	s = strings.TrimSuffix(s, "\n")
