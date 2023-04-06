@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/base64"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -150,7 +151,7 @@ func parseMessage(msg string) (string, string) {
 func getHeadSHA(ctx context.Context, ref string) (string, error) {
 	out, err := exec.CommandContext(ctx, "git", "rev-parse", ref).Output()
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("error running 'git rev-parse %s': %s", ref, err)
 	}
 	s := string(out)
 	s = strings.TrimSuffix(s, "\n")
