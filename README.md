@@ -22,7 +22,7 @@ and should not be used in place of `git` for day-to-day development.
 
 ## Install
 
-1. go install: `go install github.com/pantheon-systems/ghcommit@latest`
+1. go install: `go install github.com/planetscale/ghcommit@latest`
 2. Binaries, tarballs, and docker images are available on the [github releases](https://github.com/planetscale/ghcommit/releases) page.
 
 ## Usage
