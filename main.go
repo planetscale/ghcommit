@@ -21,6 +21,7 @@ var version = "development"
 var opts struct {
 	Adds       []string `short:"a" long:"add" description:"Added or modified file to commit. Use multiple times for multiple files." env:"GHCOMMIT_ADD"`
 	Deletes    []string `short:"d" long:"delete" description:"Deleted file to commit. Use multiple times for multiple files." env:"GHCOMMIT_DELETE"`
+	Empty      bool     `short:"e" long:"empty" description:"Allow empty commit." env:"GHCOMMIT_EMPTY"`
 	Message    string   `short:"m" long:"message" description:"Commit message" env:"GHCOMMIT_MESSAGE" required:"true"`
 	Repository string   `short:"r" long:"repository" description:"Owner/Repository to commit to." env:"GHCOMMIT_REPOSITORY" required:"true"`
 	Branch     string   `short:"b" long:"branch" description:"Branch to commit to." env:"GHCOMMIT_BRANCH" required:"true"`
@@ -42,8 +43,8 @@ func main() {
 		os.Exit(0)
 	}
 
-	if len(opts.Adds) == 0 && len(opts.Deletes) == 0 {
-		log.Fatal("No files to commit")
+	if len(opts.Adds) == 0 && len(opts.Deletes) == 0 && !opts.Empty {
+		log.Fatal("No files to commit. Use --empty flag to allow empty commits.")
 	}
 
 	ght := os.Getenv("GITHUB_TOKEN")
