@@ -37,6 +37,7 @@ jobs:
 
       - run: make lint
       - run: make test
+      - run: make snapshot
 
   release:
     needs: [test]
