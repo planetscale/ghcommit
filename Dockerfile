@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 # cgr.dev/chainguard/git:2.41.0:
-FROM cgr.dev/chainguard/git@sha256:549b8c78695131d41018e12e1c21107322227fd0669126f4bf13d00bf64cac6c
+FROM cgr.dev/chainguard/git@sha256:fea4b8f37c91aac85d06c69cd8e406f81890f7e841b2d10a84b2cfb1b9ec21c0
 
 COPY ghcommit /ghcommit
 
