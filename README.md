@@ -2,21 +2,19 @@
 
 Use GitHub's GraphQL API `createCommitOnBranch` mutation to commit files to a GitHub repository.
 
+There is a companion GitHub Action in the the [ghcommit-action](https://github.com/planetscale/ghcommit-action) repo.
+
 ## Why?
 
-Enable keyless signing.
+Enable keyless signing in CI environments. Especially useful for repos which require signed commits and have
+CI worklows that commit back to the repo (eg: code formatters, generators, etc).
 
-Commits made within a CI environment like GitHub Actions using the `git` cli line will not
-be signed. By using the API, commits are signed with GitHub's GPG key.
+Normally in order to sign commits from within a CI pipeline you would need to setup and manage GPG or SSH keys
+in the CI pipeline. And you take on the risk of those keys be copied by developers with access to the CI environment.
+The keys will need to be rotated as people leave the team or keys expire. Using `ghcommit` instead uses the GitHub
+GraphQL API to make git commits which are signed by GitHub's web flow GPG key.
 
-This method allows for signed commits in a CI environment without needing to manage private
-GPG keys. This is important for repositories that require signed commits as part of their
-branch protection.
-
-It is possible to sign commits with GPG, however managing GPG keys can be cumbersome,
-especially when maintainers leave a project. Using the API eliminates the need for key management.
-
-:warning: This is meant for use in CI environments and with small commits. For example, a CI workflow
+> :warning: This is meant for use in CI environments and with small commits. For example, a CI workflow
 that formats code and commits the changes. This is not meant to be used for large commits
 and should not be used in place of `git` for day-to-day development.
 
