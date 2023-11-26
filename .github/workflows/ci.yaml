@@ -19,15 +19,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-go@v4
         with:
-          go-version: "1.20"
+          go-version-file: go.mod
 
       - uses: golangci/golangci-lint-action@v3
-        with:
-          version: v1.52.2
 
       # installed here to run lint on the .goreleaser.yml file:
       - name: Install GoReleaser
@@ -39,21 +37,18 @@ jobs:
       - run: make test
 
   release-test:
-    runs-on: ubuntu-latest
     # only run goreleaser snapshot on non-main branch
     if: github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-go@v4
         with:
-          go-version: "1.20"
+          go-version-file: go.mod
 
       - uses: golangci/golangci-lint-action@v3
-        with:
-          version: v1.52.2
 
-      # installed here to run lint on the .goreleaser.yml file:
       - name: Install GoReleaser
         uses: goreleaser/goreleaser-action@v4
         with:
@@ -62,22 +57,20 @@ jobs:
       - run: make snapshot
 
   release:
+    if: github.ref == 'refs/heads/main'
     needs: [test]
     runs-on: ubuntu-latest
     # only create a release on main builds:
-    if: github.ref == 'refs/heads/main'
     steps:
       - name: checkout code with full history (unshallow)
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: fetch tags
-        run: git fetch --force --tags
+          fetch-tags: true
 
       - uses: actions/setup-go@v4
         with:
-          go-version: "1.20"
+          go-version-file: go.mod
 
       - name: install autotag binary
         run: |
