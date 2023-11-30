@@ -4,7 +4,7 @@ go 1.21.4
 
 require (
 	github.com/jessevdk/go-flags v1.5.0
-	github.com/shurcooL/githubv4 v0.0.0-20230305132112-efb623903184
+	github.com/shurcooL/githubv4 v0.0.0-20231126234147-1cffa1f02456
 	golang.org/x/oauth2 v0.15.0
 )
 
