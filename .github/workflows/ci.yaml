@@ -19,17 +19,17 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
-      - uses: actions/setup-go@v4
+      - uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4
         with:
           go-version-file: go.mod
 
-      - uses: golangci/golangci-lint-action@v3
+      - uses: golangci/golangci-lint-action@3a919529898de77ec3da873e3063ca4b10e7f5cc # v3
 
       # installed here to run lint on the .goreleaser.yml file:
       - name: Install GoReleaser
-        uses: goreleaser/goreleaser-action@v4
+        uses: goreleaser/goreleaser-action@5fdedb94abba051217030cc86d4523cf3f02243d # v4
         with:
           install-only: true
 
@@ -41,16 +41,16 @@ jobs:
     if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
-      - uses: actions/setup-go@v4
+      - uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4
         with:
           go-version-file: go.mod
 
-      - uses: golangci/golangci-lint-action@v3
+      - uses: golangci/golangci-lint-action@3a919529898de77ec3da873e3063ca4b10e7f5cc # v3
 
       - name: Install GoReleaser
-        uses: goreleaser/goreleaser-action@v4
+        uses: goreleaser/goreleaser-action@5fdedb94abba051217030cc86d4523cf3f02243d # v4
         with:
           install-only: true
 
@@ -63,12 +63,12 @@ jobs:
     # only create a release on main builds:
     steps:
       - name: checkout code with full history (unshallow)
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:
           fetch-depth: 0
           fetch-tags: true
 
-      - uses: actions/setup-go@v4
+      - uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4
         with:
           go-version-file: go.mod
 
@@ -77,12 +77,12 @@ jobs:
           curl -sL https://git.io/autotag-install | sudo sh -s -- -b /usr/local/bin
 
       - name: Install GoReleaser
-        uses: goreleaser/goreleaser-action@v4
+        uses: goreleaser/goreleaser-action@5fdedb94abba051217030cc86d4523cf3f02243d # v4
         with:
           install-only: true
 
       - name: login to ghcr.io
-        uses: docker/login-action@v2
+        uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc # v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
