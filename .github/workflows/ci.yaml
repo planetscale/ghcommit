@@ -29,7 +29,7 @@ jobs:
 
       # installed here to run lint on the .goreleaser.yml file:
       - name: Install GoReleaser
-        uses: goreleaser/goreleaser-action@5fdedb94abba051217030cc86d4523cf3f02243d # v4
+        uses: goreleaser/goreleaser-action@7ec5c2b0c6cdda6e8bbb49444bc797dd33d74dd8 # v5
         with:
           install-only: true
 
@@ -50,7 +50,7 @@ jobs:
       - uses: golangci/golangci-lint-action@3a919529898de77ec3da873e3063ca4b10e7f5cc # v3
 
       - name: Install GoReleaser
-        uses: goreleaser/goreleaser-action@5fdedb94abba051217030cc86d4523cf3f02243d # v4
+        uses: goreleaser/goreleaser-action@7ec5c2b0c6cdda6e8bbb49444bc797dd33d74dd8 # v5
         with:
           install-only: true
 
@@ -77,12 +77,12 @@ jobs:
           curl -sL https://git.io/autotag-install | sudo sh -s -- -b /usr/local/bin
 
       - name: Install GoReleaser
-        uses: goreleaser/goreleaser-action@5fdedb94abba051217030cc86d4523cf3f02243d # v4
+        uses: goreleaser/goreleaser-action@7ec5c2b0c6cdda6e8bbb49444bc797dd33d74dd8 # v5
         with:
           install-only: true
 
       - name: login to ghcr.io
-        uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc # v2
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
