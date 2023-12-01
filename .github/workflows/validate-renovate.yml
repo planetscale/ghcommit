@@ -1,0 +1,21 @@
+name: validate renovate.json
+
+on:
+  pull_request:
+
+env:
+  LOG_LEVEL: debug
+
+jobs:
+  renovate-config-validator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4
+        with:
+          node-version: 20
+
+      - run: npx -p renovate renovate-config-validator renovate.json
