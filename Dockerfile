@@ -1,5 +1,5 @@
-# syntax=docker/dockerfile:1.7@sha256:dbbd5e059e8a07ff7ea6233b213b36aa516b4c53c645f1817a4dd18b83cbea56
-FROM pscale.dev/wolfi-prod/git:2.44.0@sha256:fc09a064116357822d5e43cf306374b7c91b64bc3714b042934494396298016c
+# syntax=docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+FROM pscale.dev/wolfi-prod/git:2.44.0@sha256:713af3be1b94865d3c914786fe999ec1e78354a4b1410520a78a72ed78f29c8e
 
 COPY ghcommit /ghcommit
 
