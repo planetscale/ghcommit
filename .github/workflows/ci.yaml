@@ -25,7 +25,7 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - uses: golangci/golangci-lint-action@38e1018663fa5173f3968ea0777460d3de38f256 # v5
+      - uses: golangci/golangci-lint-action@a4f60bb28d35aeee14e6880718e0c85ff1882e64 # v6
 
       # installed here to run lint on the .goreleaser.yml file:
       - name: Install GoReleaser
@@ -47,7 +47,7 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - uses: golangci/golangci-lint-action@38e1018663fa5173f3968ea0777460d3de38f256 # v5
+      - uses: golangci/golangci-lint-action@a4f60bb28d35aeee14e6880718e0c85ff1882e64 # v6
 
       - name: Install GoReleaser
         uses: goreleaser/goreleaser-action@7ec5c2b0c6cdda6e8bbb49444bc797dd33d74dd8 # v5
