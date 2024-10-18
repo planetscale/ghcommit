@@ -3,5 +3,14 @@
   "extends": [
     "github>planetscale/renovate-config",
     "github>planetscale/renovate-config:weeklyBatchMinorPatchDigest"
+  ],
+  "packageRules": [
+    {
+      "description": "Don't pin static image, we do not want its weekly updates.",
+      "matchPackageNames": [
+        "pscale.dev/wolfi-prod/git"
+      ],
+      "pinDigests": false
+    }
   ]
 }
