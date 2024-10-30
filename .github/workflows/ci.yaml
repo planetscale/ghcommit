@@ -10,11 +10,6 @@ on:
       - reopened
       - synchronize
 
-permissions:
-  # these perms needed for goreleaser to publish releases and docker images (https://goreleaser.com/ci/actions/#token-permissions):
-  contents: write
-  packages: write
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -37,8 +32,6 @@ jobs:
       - run: make test
 
   release-test:
-    # only run goreleaser snapshot on non-main branch
-    if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4
@@ -55,40 +48,3 @@ jobs:
           install-only: true
 
       - run: make snapshot
-
-  release:
-    if: github.ref == 'refs/heads/main'
-    needs: [test]
-    runs-on: ubuntu-latest
-    # only create a release on main builds:
-    steps:
-      - name: checkout code with full history (unshallow)
-        uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4
-        with:
-          fetch-depth: 0
-          fetch-tags: true
-
-      - uses: actions/setup-go@0a12ed9d6a96ab950c8f026ed9f722fe0da7ef32 # v5
-        with:
-          go-version-file: go.mod
-
-      - name: install autotag binary
-        run: |
-          curl -sL https://git.io/autotag-install | sudo sh -s -- -b /usr/local/bin
-
-      - name: Install GoReleaser
-        uses: goreleaser/goreleaser-action@286f3b13b1b49da4ac219696163fb8c1c93e1200 # v6
-        with:
-          install-only: true
-
-      - name: login to ghcr.io
-        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: do release
-        run: make release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
