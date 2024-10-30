@@ -1,3 +1,5 @@
+version: 2 # goreleaser config format
+
 project_name: ghcommit
 
 builds:
@@ -107,3 +109,4 @@ dockers:
       - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}-arm64"
       - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}.{{ .Patch }}-arm64"
       - "ghcr.io/planetscale/ghcommit:latest-arm64"
+# TODO: generate multi-arch docker image manifests
