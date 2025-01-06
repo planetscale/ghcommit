@@ -66,6 +66,7 @@ jobs:
       - name: install autotag binary
         run: |
           curl -sL https://git.io/autotag-install | sh -s -- -b "${RUNNER_TEMP}/bin"
+          echo "${RUNNER_TEMP}/bin" >> $GITHUB_PATH
 
       - name: Install GoReleaser
         uses: goreleaser/goreleaser-action@286f3b13b1b49da4ac219696163fb8c1c93e1200 # v6
