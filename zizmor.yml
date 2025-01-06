@@ -1,0 +1,7 @@
+rules:
+  cache-poisoning:
+    ignore:
+      # ci.yaml runs goreleaser in snapshot mode to test the build process but does not
+      # push a new release. However, zizmor uses the presence of goreleaser to assume
+      # a workflow publishes releases and then enables its cache-poisoning rule.
+      - ci.yaml
