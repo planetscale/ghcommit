@@ -16,6 +16,8 @@ import (
 	"golang.org/x/oauth2"
 )
 
+const githubGraphQLURL = "https://api.github.com/graphql"
+
 var version = "development"
 
 var opts struct {
@@ -52,9 +54,17 @@ func main() {
 		log.Fatal("GITHUB_TOKEN env var must be set")
 	}
 
+	ghes := os.Getenv("GITHUB_GRAPHQL_URL")
+
 	tok := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: ght})
 	httpClient := oauth2.NewClient(ctx, tok)
-	client := githubv4.NewClient(httpClient)
+
+	var client *githubv4.Client
+	if ghes == githubGraphQLURL {
+		client = githubv4.NewClient(httpClient)
+	} else {
+		client = githubv4.NewEnterpriseClient(ghes, httpClient)
+	}
 
 	// parse the commit message into headline and body
 	headline, body := parseMessage(opts.Message)
