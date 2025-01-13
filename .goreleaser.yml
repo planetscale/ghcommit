@@ -86,6 +86,10 @@ release:
 dockers:
   # primary docker image for amd64 arch
   - dockerfile: Dockerfile
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--platform=linux/amd64"
     ids:
       - ghcommit
     goos: linux
@@ -98,6 +102,10 @@ dockers:
       - "ghcr.io/planetscale/ghcommit:latest"
   # build a docker image for arm64 arch
   - dockerfile: Dockerfile
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--platform=linux/arm64"
     ids:
       - ghcommit
     goos: linux
@@ -109,4 +117,25 @@ dockers:
       - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}-arm64"
       - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}.{{ .Patch }}-arm64"
       - "ghcr.io/planetscale/ghcommit:latest-arm64"
-# TODO: generate multi-arch docker image manifests
+
+# use `docker_manifests` section to create combined multi-arch image manifests:
+docker_manifests:
+  - name_template: "ghcr.io/planetscale/ghcommit:{{ .Tag }}"
+    image_templates:
+      - "ghcr.io/planetscale/ghcommit:{{ .Tag }}-amd64"
+      - "ghcr.io/planetscale/ghcommit:{{ .Tag }}-arm64"
+
+  - name_template: "ghcr.io/planetscale/ghcommit:v{{ .Major }}"
+    image_templates:
+      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}-amd64"
+      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}-arm64"
+
+  - name_template: "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}"
+    image_templates:
+      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}-amd64"
+      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}-arm64"
+
+  - name_template: "ghcr.io/planetscale/ghcommit:latest"
+    image_templates:
+      - "ghcr.io/planetscale/ghcommit:latest-amd64"
+      - "ghcr.io/planetscale/ghcommit:latest-arm64"
