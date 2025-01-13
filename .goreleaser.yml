@@ -95,11 +95,11 @@ dockers:
     goos: linux
     goarch: amd64
     image_templates:
-      - "ghcr.io/planetscale/ghcommit:{{ .Tag }}"
-      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}"
-      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}"
-      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
-      - "ghcr.io/planetscale/ghcommit:latest"
+      - "ghcr.io/planetscale/ghcommit:{{ .Tag }}-amd64"
+      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}-amd64"
+      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}-amd64"
+      - "ghcr.io/planetscale/ghcommit:v{{ .Major }}.{{ .Minor }}.{{ .Patch }}-amd64"
+      - "ghcr.io/planetscale/ghcommit:latest-amd64"
   # build a docker image for arm64 arch
   - dockerfile: Dockerfile
     use: buildx
