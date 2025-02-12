@@ -31,11 +31,11 @@ jobs:
           go-version-file: go.mod
           cache: false
 
-      - uses: golangci/golangci-lint-action@ec5d18412c0aeab7936cb16880d708ba2a64e1ae # v6
+      - uses: golangci/golangci-lint-action@051d91933864810ecd5e2ea2cfd98f6a5bca5347 # v6
 
       # installed here to run lint on the .goreleaser.yml file:
       - name: Install GoReleaser
-        uses: goreleaser/goreleaser-action@9ed2f89a662bf1735a48bc8557fd212fa902bebf # v6
+        uses: goreleaser/goreleaser-action@90a3faa9d0182683851fbfa97ca1a2cb983bfca3 # v6
         with:
           install-only: true
 
@@ -69,7 +69,7 @@ jobs:
           echo "${RUNNER_TEMP}/bin" >> $GITHUB_PATH
 
       - name: Install GoReleaser
-        uses: goreleaser/goreleaser-action@9ed2f89a662bf1735a48bc8557fd212fa902bebf # v6
+        uses: goreleaser/goreleaser-action@90a3faa9d0182683851fbfa97ca1a2cb983bfca3 # v6
         with:
           install-only: true
 
