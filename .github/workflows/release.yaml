@@ -31,7 +31,7 @@ jobs:
           go-version-file: go.mod
           cache: false
 
-      - uses: golangci/golangci-lint-action@2226d7cb06a077cd73e56eedd38eecad18e5d837 # v6
+      - uses: golangci/golangci-lint-action@4696ba8babb6127d732c3c6dde519db15edab9ea # v6
 
       # installed here to run lint on the .goreleaser.yml file:
       - name: Install GoReleaser
@@ -74,7 +74,7 @@ jobs:
           install-only: true
 
       - name: login to ghcr.io
-        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3
+        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
