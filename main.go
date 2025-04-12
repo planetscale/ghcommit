@@ -137,7 +137,7 @@ func base64EncodeFile(path string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	defer in.Close()
+	defer in.Close() // nolint: errcheck
 
 	buf := bytes.Buffer{}
 	encoder := base64.NewEncoder(base64.StdEncoding, &buf)
