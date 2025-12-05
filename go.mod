@@ -2,7 +2,7 @@ module github.com/planetscale/ghcommit
 
 go 1.24.0
 
-toolchain go1.25.4
+toolchain go1.25.5
 
 require (
 	github.com/jessevdk/go-flags v1.6.1
