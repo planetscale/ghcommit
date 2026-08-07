@@ -3,22 +3,19 @@ name: validate renovate.json
 on:
   pull_request:
 
-env:
-  LOG_LEVEL: debug
-  RENOVATE_VERSION: "44.11.4" # renovate: datasource=npm depName=renovate
-
 jobs:
   renovate-config-validator:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: read
 
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6
+      - uses: docker://ghcr.io/renovatebot/renovate:44.13.1@sha256:3e4149122921d530218a4ca809c59636faa668b330e4c9ea7f9ee1e20ea505dd
         with:
-          node-version: lts/*
-
-      - run: npx --yes --ignore-scripts -p "renovate@${RENOVATE_VERSION}" -- renovate-config-validator renovate.json
+          entrypoint: renovate-config-validator
+          args: --no-global renovate.json
