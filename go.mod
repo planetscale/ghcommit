@@ -1,6 +1,6 @@
 module github.com/planetscale/ghcommit
 
-go 1.24.0
+go 1.25.0
 
 toolchain go1.25.10
 
@@ -13,5 +13,5 @@ require (
 require (
 	github.com/shurcooL/graphql v0.0.0-20220606043923-3cf50f8a0a29 // indirect
 	golang.org/x/net v0.38.0 // indirect
-	golang.org/x/sys v0.31.0 // indirect
+	golang.org/x/sys v0.44.0 // indirect
 )
