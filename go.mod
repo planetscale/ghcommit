@@ -1,8 +1,6 @@
 module github.com/planetscale/ghcommit
 
-go 1.24.0
-
-toolchain go1.25.10
+go 1.26.0
 
 require (
 	github.com/jessevdk/go-flags v1.6.1
@@ -12,6 +10,6 @@ require (
 
 require (
 	github.com/shurcooL/graphql v0.0.0-20220606043923-3cf50f8a0a29 // indirect
-	golang.org/x/net v0.38.0 // indirect
-	golang.org/x/sys v0.31.0 // indirect
+	golang.org/x/net v0.60.0 // indirect
+	golang.org/x/sys v0.48.0 // indirect
 )
